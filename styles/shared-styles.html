@@ -1,0 +1,83 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<!-- shared styles for all elements and index.html -->
+<dom-module id="shared-styles">
+  <template>
+    <style>
+      .page-title {
+        @apply(--paper-font-display2);
+      }
+
+      .app-menu {
+        --paper-menu-selected-item: {
+          color: #fff;
+          background: var(--light-primary-color);
+        }
+      }
+
+      paper-menu a > *, paper-menu paper-item > *, paper-menu paper-icon-item > * {
+          pointer-events: none;
+      }
+
+
+      paper-fab {
+          --paper-fab-background:var(--paper-yellow-700);
+          --paper-fab-keybord-focus-background:var(--paper-yellow-500);
+      }
+
+      paper-item {
+          transition: .3s ease all;
+      }
+
+      .menu-content paper-item {
+          cursor:pointer;
+      }
+        
+      .menu-content paper-item paper-icon-button {
+          position: absolute;
+          right: 10px;
+          top:5px;
+      }
+
+      #toolbar-main {
+          background: #0187D0;
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      #drawer-toolbar {
+          background-color: transparent;
+      }
+
+      #drawer-toolbar .title {
+          color:rgb(100, 100, 100);
+      }
+
+      #ripple {
+          color: rgb(40, 40, 40);
+      }
+        
+      #paramsDialog {
+        width:300px;      
+      }
+
+      #calculate {
+          position:absolute;
+          bottom:24px;
+          right:24px;
+      }
+
+      @media (max-width: 600px) {
+        .page-title {
+          font-size: 24px!important;
+        }
+
+        #calculate {
+            position:absolute;
+            bottom:16px;
+            right:16px;
+        }
+      }
+    </style>
+  </template>
+</dom-module>

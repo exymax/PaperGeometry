@@ -1,0 +1,23 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="ripple-menu-item">
+    <template>
+        <style include="shared-styles">
+            paper-ripple {
+                color: rgba(0,0,0, .3);
+            }
+        </style>
+        <paper-item>
+            <paper-ripple></paper-ripple>
+            <content></content>
+        </paper-item>
+    </template>
+    <script>
+        Polymer({
+          is: 'ripple-menu-item'
+        });
+    </script>
+</dom-module>
