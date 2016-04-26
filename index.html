@@ -1,0 +1,166 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html lang="en">
+
+    <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="generator" content="Polymer Starter Kit">
+          <title>Paper Geometry</title>
+
+          <!-- Place favicon.ico in the `app/` directory -->
+
+          <!-- Chrome for Android theme color -->
+          <meta name="theme-color" content="#2E3AA1">
+
+          <!-- Web Application Manifest -->
+          <link rel="manifest" href="manifest.json">
+
+          <!-- Tile color for Win8 -->
+          <meta name="msapplication-TileColor" content="#3372DF">
+
+          <!-- Add to homescreen for Chrome on Android -->
+          <meta name="mobile-web-app-capable" content="yes">
+          <meta name="application-name" content="PSK">
+          <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+
+          <!-- Add to homescreen for Safari on iOS -->
+          <meta name="apple-mobile-web-app-capable" content="yes">
+          <meta name="apple-mobile-web-app-status-bar-style" content="black">
+          <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+          <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+
+          <!-- Tile icon for Win8 (144x144) -->
+          <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+
+          <!-- build:css styles/main.css -->
+          <link rel="stylesheet" href="styles/main.css">
+          <!-- endbuild-->
+
+          <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
+          <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+          <!-- endbuild -->
+          <script src="scripts/jquery.js"></script>
+
+          <script src="scripts/three.min.js"></script>
+          <script src="scripts/threex.domevents.js"></script>
+          <script src="scripts/OrbitControls.js"></script>
+          <script src="scripts/THREEx.WindowResize.js"></script>
+          <script src="scripts/Tween.js"></script>
+          <script src="scripts/app.js"></script>
+          <!-- Because this project uses vulcanize this should be your only html import
+               in this file. All other imports should go in elements.html -->
+          <link rel="import" href="elements/elements.html">
+
+          <link rel="import" href="elements/ripple-menu-item/ripple-menu-item.html">
+
+          <!-- For shared styles, shared-styles.html import in elements.html -->
+          <style is="custom-style" include="shared-styles"></style>
+    </head>
+
+    <body unresolved class="fullbleed layout vertical">
+          <!-- build:remove -->
+          <span id="browser-sync-binding"></span>
+          <!-- endbuild -->
+    <paper-drawer-panel responsiveWidth="800px">
+        <paper-header-panel drawer>
+            <paper-toolbar id="drawer-toolbar">
+                <div class="title">Меню</div>
+            </paper-toolbar>
+            <div>
+                <paper-menu>
+                    <paper-submenu>
+                        <paper-icon-item class="menu-trigger">
+                            <paper-ripple recenters></paper-ripple>
+                          <iron-icon src="images/cube-outline.png" item-icon></iron-icon>
+                          Элементы
+                        </paper-icon-item>
+                        <paper-menu class="menu-content" id="spaceElements">
+                            <paper-item geo-id="box">
+                                Параллелепипед
+                            </paper-item>
+                            <paper-item geo-id="sphere">
+                                Сфера
+                            </paper-item>
+                            <paper-item geo-id="pyramid">
+                                Пирамида
+                            </paper-item>
+                            <paper-item geo-id="cylinder">
+                                Цилиндр
+                            </paper-item>
+                            <paper-item geo-id="prism">
+                                Призма
+                            </paper-item>
+                            <paper-item geo-id="torus">
+                                Тор
+                            </paper-item>
+                        </paper-menu>
+                    </paper-submenu>
+                    <paper-submenu>
+                        <paper-icon-item class="menu-trigger">
+                            <paper-ripple recenters></paper-ripple>
+                          <iron-icon src="images/settings.png" item-icon></iron-icon>
+                          Настройки
+                        </paper-icon-item>
+                        <paper-menu class="menu-content">
+                            <paper-item id="resetObjectParams">Сброс параметров</paper-item>
+                            <paper-item id="clearScene">Очистить сцену</paper-item>
+                        </paper-menu>
+                    </paper-submenu>
+              </paper-menu>
+            </div>
+            <p class="copyright">Made with <span class="heart">❤</span> by <a target="_blank" href="https://vk.com">exymax</a> </p>
+          </paper-header-panel>
+          <paper-header-panel main>
+              <paper-toolbar id="toolbar-main">
+                  <paper-icon-button icon="menu" on-tap="menuAction" paper-drawer-toggle></paper-icon-button>
+                  <div class="title" style="position:flex;">Paper Geometry</div>
+                  <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
+              </paper-toolbar>
+            <div id="content">
+                <div arrow id="moveLeft">&lt;</div>
+                <div arrow id="moveRight">&gt;</div>
+                <paper-spinner active></paper-spinner>
+                <paper-toast id="toast" text=""></paper-toast>
+        
+                <paper-dialog id="paramsDialog" modal role="alertdialog">
+                  <h2 id="paramsHeader">Параметры объекта</h2>
+                    <div id="fields">
+                        <paper-input label="Длина" data-taget="width"></paper-input>
+                    </div>
+                  <div class="buttons">
+                    <paper-button dialog-dismiss>Отмена</paper-button>
+                    <paper-button dialog-confirm autofocus>Применить</paper-button>
+                  </div>
+                </paper-dialog>
+                
+                <paper-dialog id="showCalculations" modal role="alertdialog">
+                  <h2 id="paramsHeader">Результаты вычислений</h2>
+                    <div id="results">
+                        <div id="area"></div>
+                        <div id="volume"></div>
+                    </div>
+                  <div class="buttons">
+                    <paper-button dialog-confirm autofocus>Ок</paper-button>
+                  </div>
+                </paper-dialog>
+                
+            </div>
+            <paper-fab src="images/equal.png" id="calculate"></paper-fab>
+          </paper-header-panel>
+    </paper-drawer-panel>
+          <!-- build:js scripts/app.js -->
+          <!-- endbuild-->
+    </body>
+
+</html>
